@@ -2,7 +2,7 @@ namespace FooBarQixTest;
 
 public class FooBarQix
 {
-    private Dictionary<int, string> _figures = new Dictionary<int, string>()
+    private Dictionary<int, string> _values = new Dictionary<int, string>()
     {
         [3] = "Foo",
         [5] = "Bar",
@@ -12,32 +12,25 @@ public class FooBarQix
         
     public string Generate(int number)
     {
-        var figure = "";
-        
-        if (number.IsDivisibleBy(3))
-        {
-            figure = "Foo";
-        }
-        
-        if (number % 5 == 0)
-        {
-            figure +="Bar";
-        }
+        var valueToDisplay = "";
 
-        if (number % 7 == 0)
+        foreach ((int modulo, string value) in _values)
         {
-            figure +="Qix";
+            if (number.IsDivisibleBy(modulo))
+            {
+                valueToDisplay += value;
+            }
         }
         
-        return string.IsNullOrEmpty(figure) ? number.ToString() : figure;
+        return string.IsNullOrEmpty(valueToDisplay) ? number.ToString() : valueToDisplay;
     }
 
 }
 
 public static class IntegerExtension
 {
-    public static bool IsDivisibleBy(this int number)
+    public static bool IsDivisibleBy(this int number, int modulo)
     {
-        return number % 3 == 0;
+        return number % modulo == 0;
     }
 }
